@@ -37,6 +37,9 @@ let package = Package(
                 .product(name: "TelemetryDeck", package: "SwiftSDK"),
             ],
             path: "Sources/MuesliNativeApp",
+            resources: [
+                .copy("PrivacyInfo.xcprivacy"),
+            ],
             swiftSettings: [
                 .unsafeFlags(["-parse-as-library"]),
             ],

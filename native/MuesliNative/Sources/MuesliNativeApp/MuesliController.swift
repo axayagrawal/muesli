@@ -166,6 +166,8 @@ final class MuesliController: NSObject {
         Task { [weak self] in
             guard let self else { return }
             await self.transcriptionCoordinator.preload(backend: self.selectedBackend)
+            // Pre-warm on-device Foundation Model for text polish (~500ms cold start savings)
+            PolishFilterCompat.prewarmIfAvailable()
             await MainActor.run {
                 self.refreshUI()
             }
@@ -878,13 +880,20 @@ final class MuesliController: NSObject {
                     backend: self.selectedBackend,
                     customWords: self.serializedCustomWords()
                 )
-                let text = result.text.trimmingCharacters(in: .whitespacesAndNewlines)
+                var text = result.text.trimmingCharacters(in: .whitespacesAndNewlines)
                 guard !text.isEmpty else {
                     await MainActor.run {
                         self.setState(.idle)
                     }
                     return
                 }
+
+                // Polish text using on-device Foundation Model (if enabled and available)
+                let config = await MainActor.run { self.configStore.load() }
+                if config.enablePolish {
+                    text = await PolishFilterCompat.applyIfAvailable(text)
+                }
+
                 try? self.dictationStore.insertDictation(
                     text: text,
                     durationSeconds: duration,
