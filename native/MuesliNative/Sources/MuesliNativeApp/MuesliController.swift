@@ -82,7 +82,6 @@ final class MuesliController: NSObject {
         hotkeyMonitor.onCancel = { [weak self] in self?.handleCancel() }
         hotkeyMonitor.onToggleStart = { [weak self] in self?.handleToggleStart() }
         hotkeyMonitor.onToggleStop = { [weak self] in self?.handleToggleStop() }
-        hotkeyMonitor.doubleTapEnabled = config.enableDoubleTapDictation
         hotkeyMonitor.start()
         indicator.hotkeyLabel = config.dictationHotkey.label
         indicator.onStopMeeting = { [weak self] in self?.stopMeetingRecording() }
