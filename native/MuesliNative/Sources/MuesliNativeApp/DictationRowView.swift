@@ -9,6 +9,7 @@ struct DictationRowView: View {
 
     @State private var isHovered = false
     @State private var showDeleteConfirmation = false
+    @State private var showCopied = false
 
     var body: some View {
         HStack(alignment: .top, spacing: MuesliTheme.spacing20) {
@@ -24,20 +25,38 @@ struct DictationRowView: View {
                 .lineLimit(nil)
                 .fixedSize(horizontal: false, vertical: true)
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .textSelection(.enabled)
 
-            HStack(spacing: 8) {
-                Button(action: onCopy) {
-                    Image(systemName: "doc.on.doc")
-                        .font(.system(size: 12))
-                        .foregroundStyle(MuesliTheme.textTertiary)
+            HStack(spacing: 6) {
+                if showCopied {
+                    Image(systemName: "checkmark")
+                        .font(.system(size: 11, weight: .semibold))
+                        .foregroundStyle(MuesliTheme.success)
+                        .transition(.scale.combined(with: .opacity))
+                } else {
+                    Button {
+                        onCopy()
+                        withAnimation(MuesliTheme.springSnappy) {
+                            showCopied = true
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+                            withAnimation(MuesliTheme.springSnappy) {
+                                showCopied = false
+                            }
+                        }
+                    } label: {
+                        Image(systemName: "doc.on.doc")
+                            .font(.system(size: 12))
+                            .foregroundStyle(MuesliTheme.textTertiary)
+                    }
+                    .buttonStyle(.plain)
                 }
-                .buttonStyle(.plain)
 
                 if onDelete != nil {
                     Button { showDeleteConfirmation = true } label: {
                         Image(systemName: "trash")
                             .font(.system(size: 12))
-                            .foregroundStyle(.red.opacity(0.6))
+                            .foregroundStyle(.red.opacity(0.5))
                     }
                     .buttonStyle(.plain)
                 }
@@ -48,7 +67,7 @@ struct DictationRowView: View {
         .padding(.vertical, MuesliTheme.spacing16)
         .background(isHovered ? MuesliTheme.backgroundHover : MuesliTheme.backgroundRaised)
         .onHover { hovering in
-            withAnimation(.easeInOut(duration: 0.15)) {
+            withAnimation(MuesliTheme.springSnappy) {
                 isHovered = hovering
             }
         }

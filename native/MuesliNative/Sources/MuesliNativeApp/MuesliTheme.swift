@@ -65,12 +65,18 @@ enum MuesliTheme {
     static let spacing24: CGFloat = 24
     static let spacing32: CGFloat = 32
 
-    // MARK: - Corner radii
+    // MARK: - Corner radii (Apple standard: 8, 12, 16, 20)
 
-    static let cornerSmall: CGFloat = 6
-    static let cornerMedium: CGFloat = 10
-    static let cornerLarge: CGFloat = 14
+    static let cornerSmall: CGFloat = 8
+    static let cornerMedium: CGFloat = 12
+    static let cornerLarge: CGFloat = 16
     static let cornerXL: CGFloat = 20
+
+    // MARK: - Animations (Apple spring defaults)
+
+    static let springSnappy = Animation.spring(duration: 0.25, bounce: 0.15)
+    static let springSmooth = Animation.spring(duration: 0.35, bounce: 0.1)
+    static let springGentle = Animation.spring(duration: 0.5, bounce: 0.05)
 }
 
 // MARK: - Color Helpers

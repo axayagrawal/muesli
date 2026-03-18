@@ -6,7 +6,7 @@ struct StatsHeaderView: View {
     let meetingStats: MeetingStats
 
     var body: some View {
-        HStack(spacing: MuesliTheme.spacing16) {
+        HStack(spacing: MuesliTheme.spacing12) {
             StatCard(
                 icon: "flame.fill",
                 iconColor: .orange,
@@ -50,13 +50,16 @@ private struct StatCard: View {
     let value: String
     let label: String
 
+    @State private var isHovered = false
+
     var body: some View {
         VStack(spacing: MuesliTheme.spacing8) {
             Image(systemName: icon)
-                .font(.system(size: 20))
+                .font(.system(size: 18, weight: .medium))
+                .symbolRenderingMode(.hierarchical)
                 .foregroundStyle(iconColor)
             Text(value)
-                .font(MuesliTheme.title2())
+                .font(.system(size: 24, weight: .bold, design: .rounded))
                 .foregroundStyle(MuesliTheme.textPrimary)
                 .contentTransition(.numericText())
             Text(label)
@@ -65,11 +68,19 @@ private struct StatCard: View {
         }
         .frame(maxWidth: .infinity)
         .padding(MuesliTheme.spacing16)
-        .background(MuesliTheme.backgroundRaised)
-        .clipShape(RoundedRectangle(cornerRadius: MuesliTheme.cornerMedium))
+        .background(
+            RoundedRectangle(cornerRadius: MuesliTheme.cornerMedium)
+                .fill(isHovered ? MuesliTheme.backgroundHover : MuesliTheme.backgroundRaised)
+        )
         .overlay(
             RoundedRectangle(cornerRadius: MuesliTheme.cornerMedium)
-                .strokeBorder(MuesliTheme.surfaceBorder, lineWidth: 1)
+                .strokeBorder(MuesliTheme.surfaceBorder, lineWidth: 0.5)
         )
+        .scaleEffect(isHovered ? 1.02 : 1.0)
+        .onHover { hovering in
+            withAnimation(MuesliTheme.springSnappy) {
+                isHovered = hovering
+            }
+        }
     }
 }
