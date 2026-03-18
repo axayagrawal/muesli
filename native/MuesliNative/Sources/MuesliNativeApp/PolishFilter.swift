@@ -19,9 +19,7 @@ actor PolishFilter {
 
     /// Call at app launch to pre-load the on-device model (~500ms cold start savings).
     func prewarm() {
-        #if canImport(FoundationModels)
-        SystemLanguageModel.default.prewarm()
-        #endif
+        // SystemLanguageModel does not expose a prewarm() API; model loads lazily on first use.
     }
 
     /// Polish the given text using the on-device Foundation Model.

@@ -100,8 +100,9 @@ final class StreamingDictationController {
             if padded.count < chunkSamples {
                 padded.append(contentsOf: [Float](repeating: 0, count: chunkSamples - padded.count))
             }
+            let chunk = padded
             queueLock.withLock {
-                chunkQueue.append(padded)
+                chunkQueue.append(chunk)
             }
         }
 
@@ -124,14 +125,14 @@ final class StreamingDictationController {
         guard isActive else { return }
 
         // Accumulate samples and extract full chunks
-        var newChunks: [[Float]] = []
-
-        bufferLock.withLock {
+        let newChunks: [[Float]] = bufferLock.withLock {
             sampleBuffer.append(contentsOf: samples)
+            var chunks: [[Float]] = []
             while sampleBuffer.count >= chunkSamples {
-                newChunks.append(Array(sampleBuffer.prefix(chunkSamples)))
+                chunks.append(Array(sampleBuffer.prefix(chunkSamples)))
                 sampleBuffer.removeFirst(chunkSamples)
             }
+            return chunks
         }
 
         if !newChunks.isEmpty {
@@ -147,7 +148,8 @@ final class StreamingDictationController {
             if shouldStart {
                 Task { [weak self] in
                     await self?.drainQueue()
-                    self?.drainLock.withLock { self?.isDraining = false }
+                    guard let self else { return }
+                    self.drainLock.withLock { self.isDraining = false }
                 }
             }
         }

@@ -210,7 +210,7 @@ struct ModelsView: View {
     // MARK: - Actions
 
     private func startDownload(_ option: BackendOption) {
-        withAnimation { downloadingModels.insert(option.model) }
+        withAnimation { _ = downloadingModels.insert(option.model) }
         downloadProgress[option.model] = 0.05  // Show initial progress immediately
 
         let startTime = Date()
@@ -240,7 +240,7 @@ struct ModelsView: View {
         Task {
             await deleteModelFiles(option)
             await MainActor.run {
-                downloadedModels.remove(option.model)
+                _ = downloadedModels.remove(option.model)
             }
         }
     }

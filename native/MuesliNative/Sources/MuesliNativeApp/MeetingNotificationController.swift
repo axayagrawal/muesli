@@ -1,4 +1,4 @@
-import AppKit
+@preconcurrency import AppKit
 import QuartzCore
 import Foundation
 import MuesliCore
@@ -142,10 +142,12 @@ final class MeetingNotificationController {
 
     private func animateOut(completion: @escaping () -> Void) {
         guard let panel else { completion(); return }
+        // NSAnimationContext requires a @Sendable completionHandler; wrap in @MainActor closure
+        // since NSAnimationContext always calls its completion on the main thread.
         NSAnimationContext.runAnimationGroup({ ctx in
             ctx.duration = 0.2
             panel.animator().alphaValue = 0
-        }, completionHandler: completion)
+        }, completionHandler: { @MainActor [completion] in completion() })
     }
 
     @objc private func handleStartRecording() {

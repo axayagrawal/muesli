@@ -3,7 +3,7 @@ import Foundation
 
 /// Bridges real-time mic audio to VadManager's streaming API.
 /// Emits chunk boundary signals on speechEnd events for VAD-driven rotation.
-final class StreamingVadController {
+final class StreamingVadController: @unchecked Sendable {
     /// Called when VAD detects a natural speech boundary (rotation point).
     var onChunkBoundary: (() -> Void)?
 
