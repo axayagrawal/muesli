@@ -62,10 +62,6 @@ actor PolishFilter {
         #endif
     }
 
-    /// Reset the session (e.g., if the model becomes unavailable or needs a fresh context).
-    func resetSession() {
-        session = nil
-    }
 }
 
 /// Shim for macOS versions before 26 where Foundation Models is not available.
