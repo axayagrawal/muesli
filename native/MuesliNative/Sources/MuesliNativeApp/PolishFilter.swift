@@ -54,7 +54,7 @@ actor PolishFilter {
 
             return polished
         } catch {
-            fputs("[polish] failed: \(error), using raw text\n", stderr)
+            fputs("[polish] failed: \(type(of: error)), using raw text\n", stderr)
             // Reset session on error (e.g., context overflow) so next call gets a fresh one
             session = nil
             return text
