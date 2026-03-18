@@ -29,30 +29,32 @@ actor PolishFilter {
     func apply(_ text: String) async -> String {
         #if canImport(FoundationModels)
         guard SystemLanguageModel.default.availability == .available else {
-            fputs("[muesli-native] Foundation Model not available, skipping polish\n", stderr)
+            fputs("[polish] Foundation Model not available, skipping\n", stderr)
             return text
         }
 
         // Lazily create session once, reuse across calls (avoids ~50-200ms setup per call)
         if session == nil {
             session = LanguageModelSession(instructions: instructions)
-            fputs("[muesli-native] PolishFilter session created\n", stderr)
+            fputs("[polish] session created\n", stderr)
         }
 
+        guard let activeSession = session else { return text }
+
         do {
-            let response = try await session!.respond(to: text)
+            let response = try await activeSession.respond(to: text)
             let polished = response.content
 
             // Output validation: reject anomalous responses (prompt injection defense)
             let ratio = Double(polished.count) / max(Double(text.count), 1.0)
             guard ratio > 0.3 && ratio < 2.0 && !polished.isEmpty else {
-                fputs("[muesli-native] polish output anomalous (ratio=\(String(format: "%.2f", ratio))), using raw text\n", stderr)
+                fputs("[polish] output anomalous (ratio=\(String(format: "%.2f", ratio))), using raw text\n", stderr)
                 return text
             }
 
             return polished
         } catch {
-            fputs("[muesli-native] polish failed: \(error), using raw text\n", stderr)
+            fputs("[polish] failed: \(error), using raw text\n", stderr)
             // Reset session on error (e.g., context overflow) so next call gets a fresh one
             session = nil
             return text
