@@ -37,7 +37,7 @@ final class StatusBarController: NSObject, NSMenuDelegate {
                 image.isTemplate = false
                 button.image = image
             } else {
-                button.title = "M"
+                button.title = "\u{270B}"
             }
             button.toolTip = AppIdentity.displayName
         }

@@ -77,14 +77,12 @@ struct DictationsView: View {
             if appState.dictationRows.isEmpty {
                 Spacer()
                 VStack(spacing: MuesliTheme.spacing16) {
-                    Image(systemName: "mic.badge.plus")
-                        .font(.system(size: 48, weight: .ultraLight))
-                        .symbolRenderingMode(.hierarchical)
-                        .foregroundStyle(MuesliTheme.accent)
+                    Text("\u{1F91E}")
+                        .font(.system(size: 48))
                     Text("No dictations yet")
-                        .font(.system(size: 20, weight: .semibold, design: .rounded))
+                        .font(MuesliTheme.title2())
                         .foregroundStyle(MuesliTheme.textPrimary)
-                    Text("Hold **\(appState.config.dictationHotkey.label)** to start dictating")
+                    Text("Hold **\(appState.config.dictationHotkey.label)** and let your lazy fingers rest")
                         .font(MuesliTheme.callout())
                         .foregroundStyle(MuesliTheme.textTertiary)
                 }

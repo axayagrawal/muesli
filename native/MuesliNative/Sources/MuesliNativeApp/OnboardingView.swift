@@ -156,16 +156,15 @@ struct OnboardingView: View {
         VStack(spacing: MuesliTheme.spacing24) {
             Spacer()
 
-            MWaveformIcon(barCount: 13, spacing: 3)
-                .foregroundStyle(MuesliTheme.accent)
-                .frame(width: 80, height: 48)
+            Text("\u{270B}")
+                .font(.system(size: 56))
 
             VStack(spacing: MuesliTheme.spacing8) {
-                Text("Welcome to Muesli")
+                Text("Welcome to Lazy Fingers")
                     .font(MuesliTheme.title1())
                     .foregroundStyle(MuesliTheme.textPrimary)
 
-                Text("Local-first dictation and meeting transcription for macOS.")
+                Text("Speak freely. We'll handle the typing.")
                     .font(MuesliTheme.body())
                     .foregroundStyle(MuesliTheme.textSecondary)
             }
@@ -274,7 +273,7 @@ struct OnboardingView: View {
                     .font(MuesliTheme.title1())
                     .foregroundStyle(MuesliTheme.textPrimary)
 
-                Text("Muesli needs a few macOS permissions to work properly. You can grant these now or later.")
+                Text("Lazy Fingers needs a few macOS permissions to work properly. You can grant these now or later.")
                     .font(MuesliTheme.body())
                     .foregroundStyle(MuesliTheme.textSecondary)
                     .multilineTextAlignment(.center)

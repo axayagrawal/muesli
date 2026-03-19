@@ -99,13 +99,13 @@ struct AboutView: View {
                 sectionHeader("Acknowledgements")
                 aboutCard {
                     acknowledgement(
-                        name: "MLX by Apple",
-                        description: "On-device machine learning framework for Apple Silicon. Powers all local transcription inference."
+                        name: "Muesli",
+                        description: "The open-source macOS dictation app that Lazy Fingers is built on. MIT licensed."
                     )
                     Divider().background(MuesliTheme.surfaceBorder)
                     acknowledgement(
-                        name: "mlx-whisper by Apple",
-                        description: "Optimized Whisper speech-to-text implementation on MLX. Delivers 0.3s transcription latency."
+                        name: "FluidAudio by Fluid Inference",
+                        description: "Swift SDK for fully local audio AI on Apple Silicon. Powers the Parakeet TDT speech-to-text engine."
                     )
                     Divider().background(MuesliTheme.surfaceBorder)
                     acknowledgement(

@@ -58,9 +58,8 @@ struct MeetingsView: View {
     @ViewBuilder
     private var emptyState: some View {
         VStack(spacing: MuesliTheme.spacing12) {
-            Image(systemName: "person.2.wave.2")
-                .font(.system(size: 40, weight: .thin))
-                .foregroundStyle(MuesliTheme.textTertiary)
+            Text("\u{1F4AC}")
+                .font(.system(size: 40))
             Text("No meetings yet")
                 .font(MuesliTheme.title3())
                 .foregroundStyle(MuesliTheme.textSecondary)

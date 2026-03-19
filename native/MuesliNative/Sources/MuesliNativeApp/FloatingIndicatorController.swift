@@ -331,7 +331,7 @@ final class FloatingIndicatorController {
             panel.animator().alphaValue = 1.0
             contentView.animator().frame = NSRect(origin: .zero, size: warningSize)
             contentView.layer?.cornerRadius = warningSize.height / 2
-            contentView.layer?.backgroundColor = NSColor.colorWith(hex: 0xD99A11, alpha: 0.92).cgColor
+            contentView.layer?.backgroundColor = NSColor.colorWith(hex: 0xD4A54B, alpha: 0.92).cgColor
             contentView.layer?.borderWidth = 1.0
             contentView.layer?.borderColor = NSColor.colorWith(hex: 0xFFFFFF, alpha: 0.24).cgColor
 
@@ -589,19 +589,19 @@ final class FloatingIndicatorController {
         switch state {
         case .idle:
             return (
-                .colorWith(hex: 0x000000, alpha: isHovered ? 0.96 : 0.66),
-                .colorWith(hex: 0xFFFFFF, alpha: 0.18),
-                "🎤",
+                .colorWith(hex: 0x2A2620, alpha: isHovered ? 0.96 : 0.72),
+                .colorWith(hex: 0xE8956A, alpha: 0.25),
+                "\u{270B}",
                 isHovered ? "Hold \(hotkeyLabel) to dictate" : "",
-                .colorWith(hex: 0xFFFFFF, alpha: 0.92),
-                .colorWith(hex: 0xFFFFFF, alpha: 0.92),
+                .colorWith(hex: 0xFAF6F1, alpha: 0.92),
+                .colorWith(hex: 0xFAF6F1, alpha: 0.92),
                 isHovered ? 1.0 : 0.82
             )
         case .preparing:
             return (
-                .colorWith(hex: 0x3B4757, alpha: 0.94),
-                .colorWith(hex: 0xFFFFFF, alpha: 0.24),
-                "🎤",
+                .colorWith(hex: 0x3A3429, alpha: 0.94),
+                .colorWith(hex: 0xE8956A, alpha: 0.30),
+                "\u{270B}",
                 "",
                 .white,
                 .white,
@@ -609,9 +609,9 @@ final class FloatingIndicatorController {
             )
         case .recording:
             return (
-                .colorWith(hex: 0xD32F2F, alpha: 0.72),
+                .colorWith(hex: 0xD4634B, alpha: 0.78),
                 .colorWith(hex: 0xFFFFFF, alpha: 0.24),
-                isMeetingRecording ? "⏹" : "🎤",
+                isMeetingRecording ? "\u{23F9}" : "\u{270B}",
                 isMeetingRecording ? "" : "Listening",
                 .white,
                 .white,
@@ -619,9 +619,9 @@ final class FloatingIndicatorController {
             )
         case .transcribing:
             return (
-                .colorWith(hex: 0xD99A11, alpha: 0.72),
+                .colorWith(hex: 0xD4A54B, alpha: 0.78),
                 .colorWith(hex: 0xFFFFFF, alpha: 0.24),
-                "✍️",
+                "\u{270D}\u{FE0F}",
                 "Transcribing",
                 .colorWith(hex: 0x1A140D, alpha: 0.95),
                 .black,

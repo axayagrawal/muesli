@@ -82,9 +82,8 @@ struct DictionaryView: View {
 
     private var emptyState: some View {
         VStack(spacing: MuesliTheme.spacing8) {
-            Image(systemName: "character.book.closed")
+            Text("\u{1F4D6}")
                 .font(.system(size: 28))
-                .foregroundStyle(MuesliTheme.textTertiary)
             Text("No custom words yet")
                 .font(MuesliTheme.body())
                 .foregroundStyle(MuesliTheme.textSecondary)
